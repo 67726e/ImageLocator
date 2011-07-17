@@ -75,8 +75,92 @@ public class RandomImage {
             break;
             }
         case 4:                         // STRIPE_2_DIAGONAL
+            for (int i = 0; i < y; i++) {
+                if (i % 2 == 0) {
+                    int x2 = 0;
+                    int y2 = i;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color1);
+                    }
+                } else {
+                    int x2 = 0;
+                    int y2 = i;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color2);
+                    }
+                }
+            }
+
+            for (int i = 0; i < x; i++) {
+                if (i % 2 == 0) {
+                    int x2 = i;
+                    int y2 = 0;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color1);
+                    }
+                } else {
+                    int x2 = i;
+                    int y2 = 0;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color2);
+                    }
+                }
+            }
             break;
         case 5: {                       // STRIPE_3_DIAGONAL
+            for (int i = 0; i < y; i++) {
+                if (i % 3 == 0) {
+                    int x2 = 0;
+                    int y2 = i;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color1);
+                    }
+                } else if ((i - 1) % 3 == 0) {
+                    int x2 = 0;
+                    int y2 = i;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color2);
+                    }
+                } else {
+                    int x2 = 0;
+                    int y2 = i;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color3);
+                    }
+                }
+            }
+
+            for (int i = 0; i < x; i++) {
+                if (i % 3 == 0) {
+                    int x2 = i;
+                    int y2 = 0;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color1);
+                    }
+                } else if ((i - 1) % 3 == 0) {
+                    int x2 = i;
+                    int y2 = 0;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color2);
+                    }
+                } else {
+                    int x2 = i;
+                    int y2 = 0;
+
+                    while (x2 < x && y2 < y) {
+                        image.setRGB(x2++, y2++, color3);
+                    }
+                }
+            }
             break;
             }
         }
