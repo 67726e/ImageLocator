@@ -1,4 +1,4 @@
-package com.hexcoder;
+package com.hexcoder.imagelocator;
 
 /**
  * Created by IntelliJ IDEA.

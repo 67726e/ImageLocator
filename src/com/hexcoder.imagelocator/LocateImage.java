@@ -1,4 +1,4 @@
-package com.hexcoder;
+package com.hexcoder.imagelocator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

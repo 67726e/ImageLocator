@@ -1,4 +1,4 @@
-package com.hexcoder;
+package com.hexcoder.imagelocator;
 
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -11,12 +11,12 @@ import java.util.Random;
  * To change this template use File | Settings | File Templates.
  */
 public class RandomImage {
-    public final int STRIPE_2_ROW = 0;
-    public final int STRIPE_3_ROW = 1;
-    public final int STRIPE_2_COLUMN = 2;
-    public final int STRIPE_3_COLUMN = 3;
-    public final int STRIPE_2_DIAGONAL = 4;
-    public final int STRIPE_3_DIAGONAL = 5;
+    public enum ImageStyle {
+        Stripe2Row, Stripe3Row,
+        Stripe2Column, Stripe3Column,
+        Stripe2Diagonal, Stripe3Diagonal;
+    }
+
     private BufferedImage image;
     private Random random;
 
@@ -28,7 +28,7 @@ public class RandomImage {
      * @param y (int) is the vertical size of the image to be generated
      * @param style (int) is the style of the image to be generated
      */
-    public RandomImage(int x, int y, int style) {
+    public RandomImage(int x, int y, ImageStyle style) {
         image = new BufferedImage(x, y, BufferedImage.TYPE_INT_RGB);
         random = new Random();
         int color1 = random.nextInt(255) + 1;
@@ -46,13 +46,13 @@ public class RandomImage {
 
         switch (style) {
         default:                        // Default to a 2 row striped image
-        case 0:                         // STRIPE_2_ROW
+        case Stripe2Row:                         // STRIPE_2_ROW
             for (int i = 0; i < y; i++) {
                 if (i % 2 == 0) image.setRGB(0, i, x, 1, colorArray1, 0, 1);
                 else image.setRGB(0, i, x, 1, colorArray2, 0, 1);
             }
             break;
-        case 1: {                       // STRIPE_3_ROW
+        case Stripe3Row: {                       // STRIPE_3_ROW
             for (int i = 0; i < y; i++) {
                 if (i % 3 == 0) image.setRGB(0, i, x, 1, colorArray1, 0, 1);
                 else if ((i - 1) % 3 == 0) image.setRGB(0, i, x, 1, colorArray2, 0, 1);
@@ -60,13 +60,13 @@ public class RandomImage {
             }
             break;
             }
-        case 2:                         // STRIPE_2_COLUMN
+        case Stripe2Column:                         // STRIPE_2_COLUMN
             for (int i = 0; i < x; i++) {
                 if (i % 2 == 0) image.setRGB(i, 0, 1, 100, colorArray1, 0, 1);
                 else image.setRGB(i, 0, 1, 100, colorArray2, 0, 1);
             }
             break;
-        case 3: {                       // STRIPE_3_COLUMN
+        case Stripe3Column: {                       // STRIPE_3_COLUMN
             for (int i = 0; i < x; i++) {
                 if (i % 3 == 0) image.setRGB(i, 0, 1, 100, colorArray1, 0, 1);
                 else if ((i - 1) % 3 == 0) image.setRGB(i, 0, 1, 100, colorArray2, 0, 1);
@@ -74,91 +74,75 @@ public class RandomImage {
             }
             break;
             }
-        case 4:                         // STRIPE_2_DIAGONAL
+        case Stripe2Diagonal:                         // STRIPE_2_DIAGONAL
             for (int i = 0; i < y; i++) {
+                int x2 = 0;
+                int y2 = i;
+                int color;
+
                 if (i % 2 == 0) {
-                    int x2 = 0;
-                    int y2 = i;
-
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color1);
-                    }
+                    color = color1;
                 } else {
-                    int x2 = 0;
-                    int y2 = i;
+                    color = color2;
+                }
 
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color2);
-                    }
+                while (x2 < x && y2 < y) {
+                   image.setRGB(x2++, y2++, color);
                 }
             }
 
             for (int i = 0; i < x; i++) {
+                int x2 = i;
+                int y2 = 0;
+                int color;
+
                 if (i % 2 == 0) {
-                    int x2 = i;
-                    int y2 = 0;
-
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color1);
-                    }
+                    color = color1;
                 } else {
-                    int x2 = i;
-                    int y2 = 0;
+                    color = color2;
+                }
 
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color2);
-                    }
+                while (x2 < x && y2 < y) {
+                    image.setRGB(x2++, y2++, color);
                 }
             }
             break;
-        case 5: {                       // STRIPE_3_DIAGONAL
+        case Stripe3Diagonal: {                       // STRIPE_3_DIAGONAL
+            int x2;
+            int y2;
+            int color;
+
             for (int i = 0; i < y; i++) {
+                x2 = 0;
+                y2 = i;
+
                 if (i % 3 == 0) {
-                    int x2 = 0;
-                    int y2 = i;
-
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color1);
-                    }
+                    color = color1;
                 } else if ((i - 1) % 3 == 0) {
-                    int x2 = 0;
-                    int y2 = i;
-
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color2);
-                    }
+                    color = color2;
                 } else {
-                    int x2 = 0;
-                    int y2 = i;
+                    color = color3;
+                }
 
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color3);
-                    }
+                while (x2 < x && y2 < y) {
+                   image.setRGB(x2++, y2++, color);
                 }
             }
 
             for (int i = 0; i < x; i++) {
+                x2 = i;
+                y2 = 0;
+
                 if (i % 3 == 0) {
-                    int x2 = i;
-                    int y2 = 0;
-
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color1);
-                    }
+                    color = color1;
                 } else if ((i - 1) % 3 == 0) {
-                    int x2 = i;
-                    int y2 = 0;
-
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color2);
-                    }
+                    color = color2;
                 } else {
-                    int x2 = i;
-                    int y2 = 0;
+                    color = color3;
+                }
 
-                    while (x2 < x && y2 < y) {
-                        image.setRGB(x2++, y2++, color3);
-                    }
+                while (x2 < x && y2 < y) {
+                   image.setRGB(x2++, y2++, color);
                 }
             }
             break;
@@ -172,5 +156,4 @@ public class RandomImage {
      * @return BufferedImage that is the generated random image
      */
     public BufferedImage getImage() { return this.image; }
-
 }
