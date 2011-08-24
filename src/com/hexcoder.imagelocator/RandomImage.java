@@ -62,15 +62,15 @@ public class RandomImage {
             }
         case Stripe2Column:                         // STRIPE_2_COLUMN
             for (int i = 0; i < x; i++) {
-                if (i % 2 == 0) image.setRGB(i, 0, 1, 100, colorArray1, 0, 1);
-                else image.setRGB(i, 0, 1, 100, colorArray2, 0, 1);
+                if (i % 2 == 0) image.setRGB(i, 0, 1, x, colorArray1, 0, 1);
+                else image.setRGB(i, 0, 1, x, colorArray2, 0, 1);
             }
             break;
         case Stripe3Column: {                       // STRIPE_3_COLUMN
             for (int i = 0; i < x; i++) {
-                if (i % 3 == 0) image.setRGB(i, 0, 1, 100, colorArray1, 0, 1);
-                else if ((i - 1) % 3 == 0) image.setRGB(i, 0, 1, 100, colorArray2, 0, 1);
-                else image.setRGB(i, 0, 1, 100, colorArray3, 0, 1);
+                if (i % 3 == 0) image.setRGB(i, 0, 1, x, colorArray1, 0, 1);
+                else if ((i - 1) % 3 == 0) image.setRGB(i, 0, 1, x, colorArray2, 0, 1);
+                else image.setRGB(i, 0, 1, x, colorArray3, 0, 1);
             }
             break;
             }
