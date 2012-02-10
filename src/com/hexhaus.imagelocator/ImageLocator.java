@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
  * Time: 9:16 PM
  * To change this template use File | Settings | File Templates.
  */
-public class LocateImage {
+public class ImageLocator {
     private int compareX, compareY;
     private int firstX, firstY, lastX, lastY;
     private Point[] occurrences;
@@ -18,7 +18,7 @@ public class LocateImage {
     private int[][] baseRGB;
     private int[][] compareRGB;
 
-    public LocateImage(BufferedImage base, BufferedImage compare) throws ImageSizeException {
+    public ImageLocator(BufferedImage base, BufferedImage compare) {
         this.base = base;
         this.compare = compare;
 
@@ -27,11 +27,6 @@ public class LocateImage {
         lastX = -1;
         lastY = -1;
         occurrences = new Point[0];
-
-        if (base.getHeight() < compare.getHeight()
-                || base.getWidth() < compare.getWidth()) {
-            throw new ImageSizeException();
-        }
 
         baseRGB = new int[base.getHeight()][base.getWidth()];
         compareRGB = new int[compare.getHeight()][compare.getWidth()];

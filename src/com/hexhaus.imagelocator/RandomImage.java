@@ -21,7 +21,7 @@ public class RandomImage {
     private Random random;
 
     /**
-     * Generates a random image that can be used as a unique image for use in the LocateImage class
+     * Generates a random image that can be used as a unique image for use in the ImageLocator class
      * most typically as the compare image.
      *
      * @param x (int) is the horizontal size of the image to be generated
