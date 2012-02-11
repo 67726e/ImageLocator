@@ -1,19 +1,15 @@
-package com.hexcoder.imagelocator;
+package com.hexhaus.imagelocator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by IntelliJ IDEA.
- * User: 67726e
- * Date: 7/12/11
- * Time: 9:16 PM
- * To change this template use File | Settings | File Templates.
- */
 public class ImageLocator {
+    private boolean imageFound;
     private int compareX, compareY;
     private int firstX, firstY, lastX, lastY;
-    private Point[] occurrences;
+    private List<Point> occurrences;
     private BufferedImage base, compare;
     private int[][] baseRGB;
     private int[][] compareRGB;
@@ -26,7 +22,7 @@ public class ImageLocator {
         firstY = -1;
         lastX = -1;
         lastY = -1;
-        occurrences = new Point[0];
+        occurrences = new ArrayList<Point>();
 
         baseRGB = new int[base.getHeight()][base.getWidth()];
         compareRGB = new int[compare.getHeight()][compare.getWidth()];
@@ -44,6 +40,10 @@ public class ImageLocator {
         }
     }
 
+    public boolean isImageFound() {
+        return imageFound;
+    }
+
     /**
      * Receives x/y coordinates and check if there is an occurrence that starts at that coordinate
      *
@@ -52,10 +52,12 @@ public class ImageLocator {
      * @return true if there is a location at the given coordinate, otherwise false
      */
     public boolean isAtLocation(int x, int y) {
-        for (int i = 0; i < occurrences.length; i++) {
-            if (occurrences[i].getX() == x
-                    && occurrences[i].getY() == y) return true;
+        for (Point point : occurrences) {
+            if (point.getX() == x && point.getY() == y) {
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -84,14 +86,14 @@ public class ImageLocator {
      *
      * @return int that is the length of the array containing all matches
      */
-    public int numberOfOccurrences() { return this.occurrences.length; }
+    public int numberOfOccurrences() { return this.occurrences.size(); }
 
     /**
      * Gives a Point array with all the occurrences of the compare image within the base image
      *
      * @return Returns an array of Point objects each containing a coordinate match of the compare image within the base image
      */
-    public Point[] getOccurrences() { return this.occurrences; }
+    public List<Point> getOccurrences() { return this.occurrences; }
 
     /**
      * Searches through the base image and records any instance of the compare image within
@@ -173,14 +175,14 @@ public class ImageLocator {
 							if (y >= baseRGB.length) { match = false; }							// Check if we have reached the vertical end of the image
 							else if (x >= baseRGB[0].length) { match = false; }					// Check if we have reached the horizontal end of the image
 							else {
-								bRGB = baseRGB[y][x];												// Get "base" RGB value
+								bRGB = baseRGB[y][x];											// Get "base" RGB value
 								bR = bRGB & 0x00FF0000;											// Zero-Out all but the R bits
 								bR = bR >> 16;													// Shift over 16 bits to get value
 								bG = bRGB & 0x0000FF00;											// Zero-Out all but the G bits
 								bG = bG >> 8;													// Shift over 8 bits to get value
 								bB = bRGB & 0x000000FF;											// Zero-Out all but the B bits (no shifting needed)
 
-								cRGB = compareRGB[y - baseY][x - baseX];							// Get "compare" RGB value
+								cRGB = compareRGB[y - baseY][x - baseX];						// Get "compare" RGB value
 								cR = cRGB & 0x00FF0000;											// Zero-Out all but the R bits
 								cR = cR >> 16;													// Shift over 16 bits to get value
 								cG = cRGB & 0x0000FF00;											// Zero-Out all but the G bits
@@ -219,11 +221,13 @@ public class ImageLocator {
      * @param y is the vertical coordinate
      */
     private void addOccurrence(int x, int y) {
-        Point[] temp = occurrences;
-        occurrences = new Point[occurrences.length + 1];
-        for (int i = 0; i < temp.length; i++) {
-            occurrences[i] = temp[i];
-        }
-        occurrences[temp.length] = new Point(x, y);
+        occurrences.add(new Point(x, y));
+        imageFound = true;
+//        Point[] temp = occurrences;
+//        occurrences = new Point[occurrences.length + 1];
+//        for (int i = 0; i < temp.length; i++) {
+//            occurrences[i] = temp[i];
+//        }
+//        occurrences[temp.length] = new Point(x, y);
     }
 }

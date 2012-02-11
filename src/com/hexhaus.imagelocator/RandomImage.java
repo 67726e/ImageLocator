@@ -1,15 +1,8 @@
-package com.hexcoder.imagelocator;
+package com.hexhaus.imagelocator;
 
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-/**
- * Created by IntelliJ IDEA.
- * User: 67726e
- * Date: 7/15/11
- * Time: 10:16 PM
- * To change this template use File | Settings | File Templates.
- */
 public class RandomImage {
     public enum ImageStyle {
         Stripe2Row, Stripe3Row,
